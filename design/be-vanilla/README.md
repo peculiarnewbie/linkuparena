@@ -1,0 +1,1 @@
+inspired by herd mentality
