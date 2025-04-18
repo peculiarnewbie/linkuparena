@@ -13,9 +13,11 @@
         "@tanstack/router-plugin": "^1.109.2",
         "@tanstack/solid-router": "^1.110.0",
         "@tanstack/solid-router-devtools": "^1.109.2",
+        "@tokenami/css": "^0.0.85",
         "solid-js": "^1.9.4"
     },
     "devDependencies": {
+        "tokenami": "^0.0.85",
         "typescript": "^5.7.2",
         "vite": "^6.0.11",
         "vite-plugin-solid": "^2.11.2"
