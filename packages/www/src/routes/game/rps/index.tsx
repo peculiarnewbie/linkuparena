@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/solid-router";
-import { createSignal, onMount } from "solid-js";
+import { createEffect, createSignal, onMount } from "solid-js";
 import { css } from "@tokenami/css";
+import { animate, createSpring, stagger } from "animejs";
 
 export const Route = createFileRoute("/game/rps/")({
     component: RouteComponent,
@@ -31,8 +32,37 @@ function RouteComponent() {
         setPlayer1Selection(randomSelection);
     };
 
+    let resultRef: HTMLDivElement | undefined;
+
+    createEffect(() => {});
+
+    const animateSelection = () => {
+        animate(".selection", {
+            opacity: [
+                { from: 0, ease: "outQuad", duration: 600 },
+                { to: 1, ease: "outBounce", duration: 800, delay: 100 },
+            ],
+            y: [
+                { to: "-7rem", ease: "outQuad", duration: 600 },
+                { to: 0, ease: "outBounce", duration: 800, delay: 100 },
+            ],
+            delay: stagger(100),
+            duration: stagger(200, { start: 500 }),
+            alternate: true,
+        });
+    };
+
     onMount(() => {
         randomizePlayer1Selection();
+        animate(".bounce", {
+            scale: [
+                { to: 1.1, ease: "inOut(3)", duration: 200 },
+                { to: 1, ease: createSpring({ stiffness: 100 }) },
+            ],
+            loop: true,
+        });
+
+        animateSelection();
     });
 
     return (
@@ -43,6 +73,7 @@ function RouteComponent() {
                     "--flex-direction": "column",
                     "--height": "var(--size_full)",
                     "--justify-content": "space-evenly",
+                    "--font-size": "var(--font-size_huge)",
                 })}
             >
                 <div
@@ -51,6 +82,7 @@ function RouteComponent() {
                         "--display": "flex",
                         "--justify-content": "center",
                     })}
+                    class="bounce"
                 >
                     {revealed()
                         ? selectionArray[player1Selection()]
@@ -61,6 +93,7 @@ function RouteComponent() {
                         "--display": "flex",
                         "--justify-content": "center",
                     })}
+                    ref={resultRef}
                 >
                     {revealed() ? (
                         <div>
@@ -72,6 +105,7 @@ function RouteComponent() {
                                 onclick={() => {
                                     setRevealed(false);
                                     randomizePlayer1Selection();
+                                    animateSelection();
                                 }}
                             >
                                 restart
@@ -97,6 +131,10 @@ function RouteComponent() {
                                       setPlayer2Selection(index);
                                       setRevealed(true);
                                   }}
+                                  class="selection"
+                                  style={css({
+                                      "--font-size": "var(--font-size_huge)",
+                                  })}
                               >
                                   {selection}
                               </button>

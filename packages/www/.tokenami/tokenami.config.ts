@@ -12,7 +12,9 @@ export default createConfig({
         color: {},
         ease: {},
         font: {},
-        "font-size": {},
+        "font-size": {
+            huge: "3rem",
+        },
         leading: {},
         "line-style": {},
         radii: {},
