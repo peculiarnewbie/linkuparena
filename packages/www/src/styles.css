@@ -1,15 +1,36 @@
-@import "tailwindcss";
 
-body {
-  @apply m-0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+
+@layer tkb {
+  :root {
+    --_grid: .25rem;
+    --size_full: 100%;
+  }
+
+  * {
+    --display: initial;
+    --flex-direction: initial;
+    --height: initial;
+    --justify-content: initial;
+    --flex-basis: initial;
+    --gap: initial;
+  }
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+@layer tk1 {
+  [style] {
+    display: var(--display, revert-layer);
+    height: var(--_1awdfto, var(--height, revert-layer));
+    --_1awdfto: var(--height__calc) calc(var(--height) * var(--_grid));
+    gap: var(--_tv0n1y, var(--gap, revert-layer));
+    --_tv0n1y: var(--gap__calc) calc(var(--gap) * var(--_grid));
+  }
+}
+
+@layer tk2 {
+  [style] {
+    flex-direction: var(--flex-direction, revert-layer);
+    justify-content: var(--justify-content, revert-layer);
+    flex-basis: var(--_1cztp9a, var(--flex-basis, revert-layer));
+    --_1cztp9a: var(--flex-basis__calc) calc(var(--flex-basis) * var(--_grid));
+  }
 }
