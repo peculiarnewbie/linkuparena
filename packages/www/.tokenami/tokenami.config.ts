@@ -66,7 +66,7 @@ export default createConfig({
             tracking: {},
             transition: {},
             weight: {},
-            z: {},
+            z: { "2": 2 },
         },
     },
     aliases: {},

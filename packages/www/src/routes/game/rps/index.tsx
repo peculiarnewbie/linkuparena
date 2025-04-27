@@ -100,6 +100,9 @@ function RouteComponent() {
                                     setRevealed(false);
                                     randomizePlayer1Selection();
                                 }}
+                                style={css({
+                                    "--font-size": "var(--font-size_huge)",
+                                })}
                             >
                                 restart
                             </button>

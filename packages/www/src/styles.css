@@ -21,6 +21,7 @@
     --shadow_xl: 0 20px 25px -5px #0000001a, 0 8px 10px -6px #0000001a;
     --size_full: 100%;
     --size_screen: 100vh;
+    --z_2: 2;
   }
 
   .theme-light {

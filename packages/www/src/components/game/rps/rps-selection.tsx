@@ -1,10 +1,4 @@
-import {
-    animate,
-    stagger,
-    utils,
-    type DOMTarget,
-    type DOMTargetsArray,
-} from "animejs";
+import { animate, stagger, utils, type DOMTargetsArray } from "animejs";
 import { RpsButton } from "./rps-button";
 import { onMount } from "solid-js";
 import { css } from "@tokenami/css";
@@ -68,7 +62,6 @@ export const RpsSelection = (props: {
         $rpsSelections = utils.$(".selection");
         $selectionContainers = utils.$(".selection .container");
         animateSelection($rpsSelections);
-        console.log($selectionContainers);
     });
 
     return (

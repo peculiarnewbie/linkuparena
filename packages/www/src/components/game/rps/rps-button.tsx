@@ -71,7 +71,7 @@ export const RpsButton = (props: {
                 src={svgPath(props.index)}
                 style={css({
                     "--width": 35,
-                    "--z-index": 2,
+                    "--z-index": "var(--z_2)",
                 })}
             />
         </div>
