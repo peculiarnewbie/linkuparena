@@ -14,7 +14,10 @@
 @layer tkb {
   :root {
     --_grid: .25rem;
+    --border_rpsButton: solid .25rem white;
     --font-size_huge: 3rem;
+    --radii_xl: .75rem;
+    --shadow_xl: 0 20px 25px -5px #0000001a, 0 8px 10px -6px #0000001a;
     --size_full: 100%;
     --size_screen: 100vh;
   }
@@ -30,6 +33,9 @@
   }
 
   * {
+    --border-radius: initial;
+    --border: initial;
+    --box-shadow: initial;
     --height: initial;
     --background: initial;
     --display: initial;
@@ -41,7 +47,10 @@
 }
 
 @layer tk1 {
-  [style] {
+  [style], .tk-1exkghf {
+    border-radius: var(--border-radius, revert-layer);
+    border: var(--border, revert-layer);
+    box-shadow: var(--box-shadow, revert-layer);
     height: var(--_1awdfto, var(--height, revert-layer));
     --_1awdfto: var(--height__calc) calc(var(--height) * var(--_grid));
     background: var(--background, revert-layer);
@@ -53,11 +62,19 @@
 }
 
 @layer tk2 {
-  [style] {
+  [style], .tk-1exkghf {
     flex-direction: var(--flex-direction, revert-layer);
     justify-content: var(--justify-content, revert-layer);
     font-size: var(--font-size, revert-layer);
     flex-basis: var(--_1cztp9a, var(--flex-basis, revert-layer));
     --_1cztp9a: var(--flex-basis__calc) calc(var(--flex-basis) * var(--_grid));
+  }
+}
+
+@layer tkc {
+  .tk-1exkghf {
+    --border-radius: var(--radii_xl);
+    --border: var(--border_rpsButton);
+    --box-shadow: var(--shadow_xl);
   }
 }

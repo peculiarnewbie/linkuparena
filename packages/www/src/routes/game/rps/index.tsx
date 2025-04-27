@@ -19,6 +19,12 @@ const result = (player1Selection: number, player2Selection: number) => {
     }
 };
 
+const rpsButton = css.compose({
+    "--border-radius": "var(--radii_xl)",
+    "--border": "var(--border_rpsButton)",
+    "--box-shadow": "var(--shadow_xl)",
+});
+
 function RouteComponent() {
     const [player1Selection, setPlayer1Selection] = createSignal<number>(0);
     const [player2Selection, setPlayer2Selection] = createSignal<number>(0);
@@ -64,6 +70,8 @@ function RouteComponent() {
 
         animateSelection();
     });
+
+    const [rpsCn, rpsCss] = rpsButton();
 
     return (
         <div
@@ -138,7 +146,7 @@ function RouteComponent() {
                                       setPlayer2Selection(index);
                                       setRevealed(true);
                                   }}
-                                  class="selection"
+                                  class={rpsCn("selection")}
                                   style={css({
                                       "--font-size": "var(--font-size_huge)",
                                   })}

@@ -34,8 +34,10 @@ export default createConfig({
         root: {
             alpha: {},
             anim: {},
-            border: {},
-            color: {},
+            border: {
+                rpsButton: "solid 0.25rem white",
+            },
+            color: { white: "ffffff" },
             ease: {},
             font: {},
             "font-size": {
@@ -43,12 +45,23 @@ export default createConfig({
             },
             leading: {},
             "line-style": {},
-            radii: {},
+            radii: {
+                xs: "0.125rem",
+                sm: "0.25rem",
+                md: "0.375rem",
+                lg: "0.5rem",
+                xl: "0.75rem",
+                "2xl": "1rem",
+                full: "calc(infinity * 1px)",
+                none: "0",
+            },
             size: {
                 screen: "100vh",
                 full: "100%",
             },
-            shadow: {},
+            shadow: {
+                xl: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+            },
             surface: {},
             tracking: {},
             transition: {},
