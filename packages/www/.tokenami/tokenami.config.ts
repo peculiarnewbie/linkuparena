@@ -37,7 +37,7 @@ export default createConfig({
             border: {
                 rpsButton: "solid 0.25rem white",
             },
-            color: { white: "ffffff" },
+            color: { white: "#ffffff", pink: "oklch(0.88 0.0606 19.63)" },
             ease: {},
             font: {},
             "font-size": {

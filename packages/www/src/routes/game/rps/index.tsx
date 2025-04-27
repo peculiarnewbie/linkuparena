@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/solid-router";
-import { createEffect, createSignal, onMount } from "solid-js";
+import { createSignal, onMount } from "solid-js";
 import { css } from "@tokenami/css";
-import { animate, createSpring, stagger } from "animejs";
+import { animate, createSpring } from "animejs";
+import { RpsSelection } from "../../../components/game/rps/rps-selection";
 
 export const Route = createFileRoute("/game/rps/")({
     component: RouteComponent,
@@ -19,12 +20,6 @@ const result = (player1Selection: number, player2Selection: number) => {
     }
 };
 
-const rpsButton = css.compose({
-    "--border-radius": "var(--radii_xl)",
-    "--border": "var(--border_rpsButton)",
-    "--box-shadow": "var(--shadow_xl)",
-});
-
 function RouteComponent() {
     const [player1Selection, setPlayer1Selection] = createSignal<number>(0);
     const [player2Selection, setPlayer2Selection] = createSignal<number>(0);
@@ -38,25 +33,12 @@ function RouteComponent() {
         setPlayer1Selection(randomSelection);
     };
 
-    let resultRef: HTMLDivElement | undefined;
-
-    createEffect(() => {});
-
-    const animateSelection = () => {
-        animate(".selection", {
-            opacity: [
-                { from: 0, ease: "outQuad", duration: 600 },
-                { to: 1, ease: "outBounce", duration: 800, delay: 100 },
-            ],
-            y: [
-                { to: "-7rem", ease: "outQuad", duration: 600 },
-                { to: 0, ease: "outBounce", duration: 800, delay: 100 },
-            ],
-            delay: stagger(100),
-            duration: stagger(200, { start: 500 }),
-            alternate: true,
-        });
+    const playerSelect = (selection: number) => {
+        setPlayer2Selection(selection);
+        setRevealed(true);
     };
+
+    let resultRef: HTMLDivElement | undefined;
 
     onMount(() => {
         randomizePlayer1Selection();
@@ -67,11 +49,7 @@ function RouteComponent() {
             ],
             loop: true,
         });
-
-        animateSelection();
     });
-
-    const [rpsCn, rpsCss] = rpsButton();
 
     return (
         <div
@@ -79,6 +57,7 @@ function RouteComponent() {
                 "--height": "var(--size_screen)",
                 "--background": "var(--color_bg)",
                 "--color": "var(--color_text-main)",
+                "--overflow": "hidden",
             })}
             class="theme-dark"
         >
@@ -120,7 +99,6 @@ function RouteComponent() {
                                 onclick={() => {
                                     setRevealed(false);
                                     randomizePlayer1Selection();
-                                    animateSelection();
                                 }}
                             >
                                 restart
@@ -130,30 +108,12 @@ function RouteComponent() {
                         ``
                     )}
                 </div>
-                <div
-                    style={css({
-                        "--display": "flex",
-                        "--justify-content": "center",
-                        "--gap": 3,
-                        "--flex-basis": 1,
-                    })}
-                >
-                    {revealed()
-                        ? selectionArray[player2Selection()]
-                        : selectionArray.map((selection, index) => (
-                              <button
-                                  onclick={() => {
-                                      setPlayer2Selection(index);
-                                      setRevealed(true);
-                                  }}
-                                  class={rpsCn("selection")}
-                                  style={css({
-                                      "--font-size": "var(--font-size_huge)",
-                                  })}
-                              >
-                                  {selection}
-                              </button>
-                          ))}
+                <div>
+                    {revealed() ? (
+                        selectionArray[player2Selection()]
+                    ) : (
+                        <RpsSelection select={playerSelect} />
+                    )}
                 </div>
             </div>
         </div>
