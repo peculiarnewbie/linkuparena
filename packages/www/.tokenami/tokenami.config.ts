@@ -1,33 +1,60 @@
 import { createConfig } from "@tokenami/css";
 
 export default createConfig({
+    globalStyles: {
+        "*, *::before, *::after": {
+            boxSizing: "border-box",
+        },
+        body: {
+            fontFamily: "system-ui, sans-serif",
+            lineHeight: 1.5,
+            margin: 0,
+            padding: 0,
+        },
+    },
     include: ["./src/**/*.{ts,tsx}"],
     grid: "0.25rem",
     responsive: {},
     themeSelector: (mode) => (mode === "root" ? ":root" : `.theme-${mode}`),
     theme: {
-        alpha: {},
-        anim: {},
-        border: {},
-        color: {},
-        ease: {},
-        font: {},
-        "font-size": {
-            huge: "3rem",
+        modes: {
+            light: {
+                color: {
+                    bg: "oklch(0.97 0.0011 17.18)",
+                    "text-main": "oklch(0.25 0.1423 274.12)",
+                },
+            },
+            dark: {
+                color: {
+                    bg: "oklch(0.34 0.0555 288.82)",
+                    "text-main": "oklch(0.87 0.0182 300.03)",
+                },
+            },
         },
-        leading: {},
-        "line-style": {},
-        radii: {},
-        size: {
-            screen: "100vh",
-            full: "100%",
+        root: {
+            alpha: {},
+            anim: {},
+            border: {},
+            color: {},
+            ease: {},
+            font: {},
+            "font-size": {
+                huge: "3rem",
+            },
+            leading: {},
+            "line-style": {},
+            radii: {},
+            size: {
+                screen: "100vh",
+                full: "100%",
+            },
+            shadow: {},
+            surface: {},
+            tracking: {},
+            transition: {},
+            weight: {},
+            z: {},
         },
-        shadow: {},
-        surface: {},
-        tracking: {},
-        transition: {},
-        weight: {},
-        z: {},
     },
     aliases: {},
     selectors: {

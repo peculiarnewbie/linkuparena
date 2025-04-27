@@ -1,16 +1,39 @@
+@layer global {
+  *, :before, :after {
+    box-sizing: border-box;
+  }
 
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, sans-serif;
+    line-height: 1.5;
+  }
+}
 
 @layer tkb {
   :root {
     --_grid: .25rem;
     --font-size_huge: 3rem;
     --size_full: 100%;
+    --size_screen: 100vh;
+  }
+
+  .theme-light {
+    --color_bg: oklch(.97 .0011 17.18);
+    --color_text-main: oklch(.25 .1423 274.12);
+  }
+
+  .theme-dark {
+    --color_bg: oklch(.34 .0555 288.82);
+    --color_text-main: oklch(.87 .0182 300.03);
   }
 
   * {
+    --height: initial;
+    --background: initial;
     --display: initial;
     --flex-direction: initial;
-    --height: initial;
     --justify-content: initial;
     --flex-basis: initial;
     --gap: initial;
@@ -19,9 +42,11 @@
 
 @layer tk1 {
   [style] {
-    display: var(--display, revert-layer);
     height: var(--_1awdfto, var(--height, revert-layer));
     --_1awdfto: var(--height__calc) calc(var(--height) * var(--_grid));
+    background: var(--background, revert-layer);
+    color: var(--color, revert-layer);
+    display: var(--display, revert-layer);
     gap: var(--_tv0n1y, var(--gap, revert-layer));
     --_tv0n1y: var(--gap__calc) calc(var(--gap) * var(--_grid));
   }

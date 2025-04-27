@@ -66,7 +66,14 @@ function RouteComponent() {
     });
 
     return (
-        <div style={{ height: "100vh" }}>
+        <div
+            style={css({
+                "--height": "var(--size_screen)",
+                "--background": "var(--color_bg)",
+                "--color": "var(--color_text-main)",
+            })}
+            class="theme-dark"
+        >
             <div
                 style={css({
                     "--display": "flex",
