@@ -1,4 +1,7 @@
 {
     "name": "linkup-games",
-    "compatibility_date": "2025-02-17",
+    "compatibility_date": "2025-05-02",
+    "assets": {
+        "not_found_handling": "single-page-application",
+    },
 }
