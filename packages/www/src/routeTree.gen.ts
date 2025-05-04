@@ -12,7 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
-import { Route as ApiIndexImport } from './routes/api/index'
+import { Route as ApiSplatImport } from './routes/api/$'
 import { Route as GameRpsIndexImport } from './routes/game/rps/index'
 
 // Create/Update Routes
@@ -23,9 +23,9 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const ApiIndexRoute = ApiIndexImport.update({
-  id: '/api/',
-  path: '/api/',
+const ApiSplatRoute = ApiSplatImport.update({
+  id: '/api/$',
+  path: '/api/$',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -46,11 +46,11 @@ declare module '@tanstack/solid-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/api/': {
-      id: '/api/'
-      path: '/api'
-      fullPath: '/api'
-      preLoaderRoute: typeof ApiIndexImport
+    '/api/$': {
+      id: '/api/$'
+      path: '/api/$'
+      fullPath: '/api/$'
+      preLoaderRoute: typeof ApiSplatImport
       parentRoute: typeof rootRoute
     }
     '/game/rps/': {
@@ -67,41 +67,41 @@ declare module '@tanstack/solid-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/api': typeof ApiIndexRoute
+  '/api/$': typeof ApiSplatRoute
   '/game/rps': typeof GameRpsIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/api': typeof ApiIndexRoute
+  '/api/$': typeof ApiSplatRoute
   '/game/rps': typeof GameRpsIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/api/': typeof ApiIndexRoute
+  '/api/$': typeof ApiSplatRoute
   '/game/rps/': typeof GameRpsIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api' | '/game/rps'
+  fullPaths: '/' | '/api/$' | '/game/rps'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api' | '/game/rps'
-  id: '__root__' | '/' | '/api/' | '/game/rps/'
+  to: '/' | '/api/$' | '/game/rps'
+  id: '__root__' | '/' | '/api/$' | '/game/rps/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ApiIndexRoute: typeof ApiIndexRoute
+  ApiSplatRoute: typeof ApiSplatRoute
   GameRpsIndexRoute: typeof GameRpsIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ApiIndexRoute: ApiIndexRoute,
+  ApiSplatRoute: ApiSplatRoute,
   GameRpsIndexRoute: GameRpsIndexRoute,
 }
 
@@ -116,15 +116,15 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/api/",
+        "/api/$",
         "/game/rps/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/api/": {
-      "filePath": "api/index.tsx"
+    "/api/$": {
+      "filePath": "api/$.tsx"
     },
     "/game/rps/": {
       "filePath": "game/rps/index.tsx"
