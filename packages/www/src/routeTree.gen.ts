@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
+import { Route as ApiIndexImport } from './routes/api/index'
 import { Route as GameRpsIndexImport } from './routes/game/rps/index'
 
 // Create/Update Routes
@@ -19,6 +20,12 @@ import { Route as GameRpsIndexImport } from './routes/game/rps/index'
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ApiIndexRoute = ApiIndexImport.update({
+  id: '/api/',
+  path: '/api/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -39,6 +46,13 @@ declare module '@tanstack/solid-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/api/': {
+      id: '/api/'
+      path: '/api'
+      fullPath: '/api'
+      preLoaderRoute: typeof ApiIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/game/rps/': {
       id: '/game/rps/'
       path: '/game/rps'
@@ -53,36 +67,41 @@ declare module '@tanstack/solid-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api': typeof ApiIndexRoute
   '/game/rps': typeof GameRpsIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api': typeof ApiIndexRoute
   '/game/rps': typeof GameRpsIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/api/': typeof ApiIndexRoute
   '/game/rps/': typeof GameRpsIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/game/rps'
+  fullPaths: '/' | '/api' | '/game/rps'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/game/rps'
-  id: '__root__' | '/' | '/game/rps/'
+  to: '/' | '/api' | '/game/rps'
+  id: '__root__' | '/' | '/api/' | '/game/rps/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiIndexRoute: typeof ApiIndexRoute
   GameRpsIndexRoute: typeof GameRpsIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiIndexRoute: ApiIndexRoute,
   GameRpsIndexRoute: GameRpsIndexRoute,
 }
 
@@ -97,11 +116,15 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/api/",
         "/game/rps/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/api/": {
+      "filePath": "api/index.tsx"
     },
     "/game/rps/": {
       "filePath": "game/rps/index.tsx"
