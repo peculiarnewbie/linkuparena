@@ -10,20 +10,22 @@
         "test": "vitest run"
     },
     "dependencies": {
-        "@cloudflare/vite-plugin": "^1.1.0",
+        "@cloudflare/vite-plugin": "^1.6.0",
         "@tanstack/solid-router": "^1.110.0",
         "@tanstack/solid-router-devtools": "^1.109.2",
-        "@tokenami/css": "^0.0.85",
+        "@tokenami/css": "^0.0.86",
         "animejs": "^4.0.1",
         "hono": "^4.7.8",
         "solid-js": "^1.9.4",
-        "zod": "^3.24.3"
+        "zod": "^3.25.64"
     },
     "devDependencies": {
-        "tokenami": "^0.0.85",
-        "typescript": "^5.7.2",
+        "@cloudflare/workers-types": "^4.20250614.0",
+        "@tanstack/router-plugin": "^1.109.2",
+        "tokenami": "^0.0.86",
+        "typescript": "^5.8.3",
         "vite": "^6.0.11",
         "vite-plugin-solid": "^2.11.2",
-        "@tanstack/router-plugin": "^1.109.2"
+        "wrangler": "^4.20.0"
     }
 }

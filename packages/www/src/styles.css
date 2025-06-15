@@ -16,12 +16,22 @@
     --_grid: .25rem;
     --border_rpsButton: solid .25rem white;
     --color_pink: oklch(.88 .0606 19.63);
+    --fluid-text-size_2xl: 1.5;
+    --fluid-text-size_7xl: 4.5;
     --font-size_huge: 3rem;
     --radii_xl: .75rem;
     --shadow_xl: 0 20px 25px -5px #0000001a, 0 8px 10px -6px #0000001a;
-    --size_full: 100%;
-    --size_screen: 100vh;
+    --size_lvh: 100lvh;
+    --text-size_2xl: 1.5rem;
     --z_2: 2;
+  }
+
+  :root, :root [style] {
+    --fluid-text-size-clamp_sm-xl: clamp(calc(var(---fluid-text-size-min) * 1rem), calc((var(---fluid-text-size-scope) * 100vw)  + (var(---fluid-text-size-intercept) * 1rem)), calc(var(---fluid-text-size-max) * 1rem));
+    ---fluid-text-size-min: var(--_fluid-text-size-min) / 1;
+    ---fluid-text-size-max: var(--_fluid-text-size-max) / 1;
+    ---fluid-text-size-scope: (var(---fluid-text-size-max)  - var(---fluid-text-size-min)) / 40;
+    ---fluid-text-size-intercept: calc(var(---fluid-text-size-min)  - (var(---fluid-text-size-scope) * 40));
   }
 
   .theme-light {
@@ -53,9 +63,12 @@
     --justify-content: initial;
     --gap: initial;
     --flex-basis: initial;
+    --block-size: initial;
     --background: initial;
     --overflow: initial;
     --flex-direction: initial;
+    --fluid-text-size-min: initial;
+    --fluid-text-size-max: initial;
   }
 }
 
@@ -82,6 +95,8 @@
     background: var(--background, revert-layer);
     color: var(--color, revert-layer);
     overflow: var(--overflow, revert-layer);
+    --_fluid-text-size-min: var(--fluid-text-size-min, revert-layer);
+    --_fluid-text-size-max: var(--fluid-text-size-max, revert-layer);
   }
 }
 
@@ -95,5 +110,12 @@
     flex-basis: var(--_1cztp9a, var(--flex-basis, revert-layer));
     --_1cztp9a: var(--flex-basis__calc) calc(var(--flex-basis) * var(--_grid));
     flex-direction: var(--flex-direction, revert-layer);
+  }
+}
+
+@layer tkl1 {
+  [style] {
+    block-size: var(--_19kaxgm, var(--block-size, revert-layer));
+    --_19kaxgm: var(--block-size__calc) calc(var(--block-size) * var(--_grid));
   }
 }

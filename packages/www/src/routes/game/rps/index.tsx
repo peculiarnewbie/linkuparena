@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/solid-router";
 import { createSignal, onMount } from "solid-js";
-import { css } from "@tokenami/css";
+import { css } from "../../../css";
 import { animate, createSpring } from "animejs";
 import { RpsSelection } from "../../../components/game/rps/rps-selection";
 
@@ -21,27 +21,27 @@ const result = (player1Selection: number, player2Selection: number) => {
 };
 
 function RouteComponent() {
-    const [player1Selection, setPlayer1Selection] = createSignal<number>(0);
-    const [player2Selection, setPlayer2Selection] = createSignal<number>(0);
+    const [enemySelection, setEnemySelection] = createSignal<number>(0);
+    const [playerSelection, setPlayerSelection] = createSignal<number>(0);
 
     const [revealed, setRevealed] = createSignal(false);
 
-    const randomizePlayer1Selection = () => {
+    const randomizeEnemySelection = () => {
         const randomSelection = Math.floor(
-            Math.random() * selectionArray.length
+            Math.random() * selectionArray.length,
         );
-        setPlayer1Selection(randomSelection);
+        setEnemySelection(randomSelection);
     };
 
     const playerSelect = (selection: number) => {
-        setPlayer2Selection(selection);
+        setPlayerSelection(selection);
         setRevealed(true);
     };
 
     let resultRef: HTMLDivElement | undefined;
 
     onMount(() => {
-        randomizePlayer1Selection();
+        randomizeEnemySelection();
         animate(".bounce", {
             scale: [
                 { to: 1.1, ease: "inOut(3)", duration: 200 },
@@ -54,7 +54,7 @@ function RouteComponent() {
     return (
         <div
             style={css({
-                "--height": "var(--size_screen)",
+                "--h": "var(--size_lvh)",
                 "--background": "var(--color_bg)",
                 "--color": "var(--color_text-main)",
                 "--overflow": "hidden",
@@ -65,9 +65,8 @@ function RouteComponent() {
                 style={css({
                     "--display": "flex",
                     "--flex-direction": "column",
-                    "--height": "var(--size_full)",
+                    "--h": "var(--size_lvh)",
                     "--justify-content": "space-evenly",
-                    "--font-size": "var(--font-size_huge)",
                 })}
             >
                 <div
@@ -75,11 +74,14 @@ function RouteComponent() {
                         "--flex-basis": 1,
                         "--display": "flex",
                         "--justify-content": "center",
+                        "--font-size": "var(--fluid-text-size-clamp_sm-xl)",
+                        "--fluid-text-size-min": "var(--fluid-text-size_2xl)",
+                        "--fluid-text-size-max": "var(--fluid-text-size_7xl)",
                     })}
                     class="bounce"
                 >
                     {revealed()
-                        ? selectionArray[player1Selection()]
+                        ? selectionArray[enemySelection()]
                         : `waiting for selection...`}
                 </div>
                 <div
@@ -93,15 +95,15 @@ function RouteComponent() {
                         <div>
                             <div>
                                 result:{" "}
-                                {result(player1Selection(), player2Selection())}
+                                {result(enemySelection(), playerSelection())}
                             </div>
                             <button
                                 onclick={() => {
                                     setRevealed(false);
-                                    randomizePlayer1Selection();
+                                    randomizeEnemySelection();
                                 }}
                                 style={css({
-                                    "--font-size": "var(--font-size_huge)",
+                                    "--font-size": "var(--text-size_2xl)",
                                 })}
                             >
                                 restart
@@ -113,7 +115,7 @@ function RouteComponent() {
                 </div>
                 <div>
                     {revealed() ? (
-                        selectionArray[player2Selection()]
+                        selectionArray[playerSelection()]
                     ) : (
                         <RpsSelection select={playerSelect} />
                     )}

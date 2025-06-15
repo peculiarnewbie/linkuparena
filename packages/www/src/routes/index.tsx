@@ -35,7 +35,8 @@ function App() {
             <button
                 onClick={async () => {
                     const res = await fetch("/api/");
-                    console.log(res);
+                    const body = await res.json();
+                    console.log(body);
                 }}
             >
                 fetch

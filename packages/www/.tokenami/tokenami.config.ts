@@ -1,5 +1,44 @@
 import { createConfig } from "@tokenami/css";
 
+const BASE_FONT_SIZE = 16;
+const BASE_GRID_SIZE = 4;
+const BP_SM = 640;
+const BP_MD = 768;
+const BP_LG = 1024;
+const BP_XL = 1280;
+const BP_2XL = 1536;
+
+const rem = <T extends number>(value: T) =>
+    `${value / BASE_FONT_SIZE}rem` as const;
+const remBreakpoint = <T extends number>(bp: T) =>
+    `@media (min-width: ${rem(bp)})` as const;
+
+const font = <S extends string, L extends string>(fontSize: S, lineHeight: L) =>
+    `var(--font-stretch) var(--font-style) var(--font-variant) var(--font-weight) ${fontSize}/${lineHeight} var(--font-family)` as const;
+
+const fluid = <
+    P extends string,
+    MinPx extends number,
+    MaxPx extends number,
+>(params: {
+    property: P;
+    from: MinPx;
+    to: MaxPx;
+    divider?: number;
+}) => {
+    const divider = params.divider ?? BASE_GRID_SIZE;
+    const breakpointMin = params.from / BASE_FONT_SIZE;
+    const breakpointMax = params.to / BASE_FONT_SIZE;
+    const breakpointScope = breakpointMax - breakpointMin;
+    return `
+    clamp(calc(var(---${params.property}-min) * 1rem), calc((var(---${params.property}-scope) * 100vw) + (var(---${params.property}-intercept) * 1rem)), calc(var(---${params.property}-max) * 1rem));
+    ---${params.property}-min: var(--${params.property}-min) / ${divider};
+    ---${params.property}-max: var(--${params.property}-max) / ${divider};
+    ---${params.property}-scope: (var(---${params.property}-max) - var(---${params.property}-min)) / ${breakpointScope};
+    ---${params.property}-intercept: calc(var(---${params.property}-min) - (var(---${params.property}-scope) * ${breakpointMin}));
+  ` as const;
+};
+
 export default createConfig({
     globalStyles: {
         "*, *::before, *::after": {
@@ -56,8 +95,26 @@ export default createConfig({
                 none: "0",
             },
             size: {
-                screen: "100vh",
+                "0": 0,
+                px: rem(1),
+                auto: "auto",
+                fit: "fit-content",
                 full: "100%",
+                half: "50%",
+                third: "33.333333%",
+                "two-thirds": "66.666667%",
+                quarter: "25%",
+                "three-quarters": "75%",
+                min: "min-content",
+                max: "max-content",
+                "screen-w": "100vw",
+                "screen-h": "100vh",
+                dvh: "100dvh",
+                dvw: "100dvw",
+                svh: "100svh",
+                svw: "100svw",
+                lvh: "100lvh",
+                lvw: "100lvw",
             },
             shadow: {
                 xl: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
@@ -67,9 +124,98 @@ export default createConfig({
             transition: {},
             weight: {},
             z: { "2": 2 },
+            "text-size": {
+                xs: rem(12),
+                sm: rem(14),
+                base: rem(16),
+                lg: rem(18),
+                xl: rem(20),
+                "2xl": rem(24),
+                "3xl": rem(30),
+                "4xl": rem(36),
+                "5xl": rem(48),
+                "6xl": rem(60),
+                "7xl": rem(72),
+                "8xl": rem(96),
+                "9xl": rem(128),
+            },
+            "fluid-text-size": {
+                xs: 12 / BASE_FONT_SIZE,
+                sm: 14 / BASE_FONT_SIZE,
+                base: 16 / BASE_FONT_SIZE,
+                lg: 18 / BASE_FONT_SIZE,
+                xl: 20 / BASE_FONT_SIZE,
+                "2xl": 24 / BASE_FONT_SIZE,
+                "3xl": 30 / BASE_FONT_SIZE,
+                "4xl": 36 / BASE_FONT_SIZE,
+                "5xl": 48 / BASE_FONT_SIZE,
+                "6xl": 60 / BASE_FONT_SIZE,
+                "7xl": 72 / BASE_FONT_SIZE,
+                "8xl": 96 / BASE_FONT_SIZE,
+                "9xl": 128 / BASE_FONT_SIZE,
+            },
+            "fluid-text-size-clamp": {
+                "min-max": fluid({
+                    property: "fluid-text-size",
+                    from: BP_SM,
+                    to: BP_2XL,
+                    divider: 1,
+                }),
+                "sm-md": fluid({
+                    property: "fluid-text-size",
+                    from: BP_SM,
+                    to: BP_MD,
+                    divider: 1,
+                }),
+                "sm-lg": fluid({
+                    property: "fluid-text-size",
+                    from: BP_SM,
+                    to: BP_LG,
+                    divider: 1,
+                }),
+                "sm-xl": fluid({
+                    property: "fluid-text-size",
+                    from: BP_SM,
+                    to: BP_XL,
+                    divider: 1,
+                }),
+                "md-lg": fluid({
+                    property: "fluid-text-size",
+                    from: BP_MD,
+                    to: BP_LG,
+                    divider: 1,
+                }),
+                "md-xl": fluid({
+                    property: "fluid-text-size",
+                    from: BP_MD,
+                    to: BP_XL,
+                    divider: 1,
+                }),
+                "md-2xl": fluid({
+                    property: "fluid-text-size",
+                    from: BP_MD,
+                    to: BP_2XL,
+                    divider: 1,
+                }),
+                "lg-xl": fluid({
+                    property: "fluid-text-size",
+                    from: BP_LG,
+                    to: BP_XL,
+                    divider: 1,
+                }),
+                "lg-2xl": fluid({
+                    property: "fluid-text-size",
+                    from: BP_LG,
+                    to: BP_2XL,
+                    divider: 1,
+                }),
+            },
         },
     },
-    aliases: {},
+    aliases: {
+        bg: ["background-color"],
+        h: ["block-size"],
+    },
     selectors: {
         after: "&::after",
         before: "&::before",
@@ -149,7 +295,7 @@ export default createConfig({
         fill: ["color"],
         "flex-basis": ["grid", "size"],
         "font-family": ["font"],
-        "font-size": ["font-size"],
+        "font-size": ["text-size", "fluid-text-size-clamp"],
         "font-weight": ["weight"],
         gap: ["grid"],
         height: ["grid", "size"],
@@ -216,5 +362,9 @@ export default createConfig({
         "transition-timing-function": ["ease"],
         width: ["grid", "size"],
         "z-index": ["z"],
+    },
+    customProperties: {
+        "fluid-text-size-min": ["fluid-text-size"],
+        "fluid-text-size-max": ["fluid-text-size"],
     },
 });
