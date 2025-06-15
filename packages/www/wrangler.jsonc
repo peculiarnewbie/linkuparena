@@ -5,4 +5,18 @@
     "assets": {
         "not_found_handling": "single-page-application",
     },
+    "durable_objects": {
+        "bindings": [
+            {
+                "name": "LINKUP_ROOM",
+                "class_name": "WebSocketHibernationServer",
+            },
+        ],
+    },
+    "migrations": [
+        {
+            "tag": "v1",
+            "new_sqlite_classes": ["WebSocketHibernationServer"],
+        },
+    ],
 }
