@@ -1,7 +1,7 @@
 {
     "name": "linkup-games",
     "compatibility_date": "2025-05-02",
-    "main": "src/api/index.ts",
+    "main": "./src/worker/index.ts",
     "assets": {
         "not_found_handling": "single-page-application",
     },
