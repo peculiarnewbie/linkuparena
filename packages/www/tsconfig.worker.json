@@ -2,7 +2,8 @@
     "compilerOptions": {
         "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.worker.tsbuildinfo",
         "types": ["./worker-configuration.d.ts", "vite/client"],
-        "composite": true
+        "composite": true,
+        "lib": ["ES2022"]
     },
     "include": ["src/worker"]
 }

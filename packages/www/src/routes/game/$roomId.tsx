@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/solid-router";
 import { onMount, createSignal, onCleanup } from "solid-js";
 
-export const Route = createFileRoute("/game/rps/$roomId")({
+export const Route = createFileRoute("/game/$roomId")({
     component: RouteComponent,
 });
 
@@ -11,16 +11,7 @@ function RouteComponent() {
     let ws: WebSocket;
 
     onMount(async () => {
-        const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-        const wsUrl = `/api/game/rps/${params().roomId}`;
-        console.log(wsUrl);
-
-        const res = await fetch(wsUrl, {
-            headers: {
-                Upgrade: "websocket",
-            },
-        });
-        console.log(res);
+        const wsUrl = `/api/game/${params().roomId}`;
 
         ws = new WebSocket(wsUrl);
 
@@ -31,6 +22,7 @@ function RouteComponent() {
 
         ws.addEventListener("message", (event) => {
             setMessages((prev) => [...prev, event.data]);
+            console.log(event);
         });
 
         ws.addEventListener("error", (error) => {
@@ -49,6 +41,7 @@ function RouteComponent() {
                     <li>{msg}</li>
                 ))}
             </ul>
+            <button onClick={() => ws?.send("ping")}>ping</button>
         </div>
     );
 }
