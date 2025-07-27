@@ -20,7 +20,7 @@ export function WebSocketProvider(props: { children: Element }) {
     const navigate = useNavigate();
 
     const connect = (roomId: string) => {
-        const websocket = new WebSocket(`wss://your-worker.workers.dev/ws/${roomId}`);
+        const websocket = new WebSocket(`wss://api/game/${roomId}`);
 
         websocket.onmessage = (event) => {
             const message: GameMessage = JSON.parse(event.data);
