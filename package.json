@@ -2,5 +2,9 @@
     "name": "linkuparena",
     "workspaces": [
         "packages/*"
-    ]
+    ],
+    "catalog": {
+        "zod": "^4.0.5",
+        "wrangler": "^4.23.0"
+    }
 }

@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as RRoomIdRouteImport } from './routes/r/$roomId'
 import { Route as GameRoomIdRouteImport } from './routes/game/$roomId'
 import { Route as ApiSplatRouteImport } from './routes/api/$'
 import { Route as GameRpsIndexRouteImport } from './routes/game/rps/index'
@@ -17,6 +18,11 @@ import { Route as GameRpsIndexRouteImport } from './routes/game/rps/index'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RRoomIdRoute = RRoomIdRouteImport.update({
+  id: '/r/$roomId',
+  path: '/r/$roomId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GameRoomIdRoute = GameRoomIdRouteImport.update({
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/api/$': typeof ApiSplatRoute
   '/game/$roomId': typeof GameRoomIdRoute
+  '/r/$roomId': typeof RRoomIdRoute
   '/game/rps': typeof GameRpsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api/$': typeof ApiSplatRoute
   '/game/$roomId': typeof GameRoomIdRoute
+  '/r/$roomId': typeof RRoomIdRoute
   '/game/rps': typeof GameRpsIndexRoute
 }
 export interface FileRoutesById {
@@ -52,20 +60,28 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/api/$': typeof ApiSplatRoute
   '/game/$roomId': typeof GameRoomIdRoute
+  '/r/$roomId': typeof RRoomIdRoute
   '/game/rps/': typeof GameRpsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/$' | '/game/$roomId' | '/game/rps'
+  fullPaths: '/' | '/api/$' | '/game/$roomId' | '/r/$roomId' | '/game/rps'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/$' | '/game/$roomId' | '/game/rps'
-  id: '__root__' | '/' | '/api/$' | '/game/$roomId' | '/game/rps/'
+  to: '/' | '/api/$' | '/game/$roomId' | '/r/$roomId' | '/game/rps'
+  id:
+    | '__root__'
+    | '/'
+    | '/api/$'
+    | '/game/$roomId'
+    | '/r/$roomId'
+    | '/game/rps/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApiSplatRoute: typeof ApiSplatRoute
   GameRoomIdRoute: typeof GameRoomIdRoute
+  RRoomIdRoute: typeof RRoomIdRoute
   GameRpsIndexRoute: typeof GameRpsIndexRoute
 }
 
@@ -76,6 +92,13 @@ declare module '@tanstack/solid-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/r/$roomId': {
+      id: '/r/$roomId'
+      path: '/r/$roomId'
+      fullPath: '/r/$roomId'
+      preLoaderRoute: typeof RRoomIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/game/$roomId': {
@@ -106,6 +129,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApiSplatRoute: ApiSplatRoute,
   GameRoomIdRoute: GameRoomIdRoute,
+  RRoomIdRoute: RRoomIdRoute,
   GameRpsIndexRoute: GameRpsIndexRoute,
 }
 export const routeTree = rootRouteImport

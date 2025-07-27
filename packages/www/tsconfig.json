@@ -21,7 +21,10 @@
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true,
         "noUncheckedSideEffectImports": true,
-        "plugins": [{ "name": "tokenami" }]
-    },
+        "plugins": [{ "name": "tokenami" }],
+        "paths": {
+            "@components/*": ["./src/components/*"],
+            "@utils/*": ["./src/utils/*"],
+        },
     "references": [{ "path": "./tsconfig.worker.json" }]
 }
