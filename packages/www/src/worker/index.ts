@@ -43,18 +43,11 @@ export class WebSocketHibernationServer extends DurableObject {
 
     async webSocketMessage(ws: WebSocket, message: ArrayBuffer | string) {
         this.ctx.getWebSockets().forEach((client) => {
-            client.send(
-                `[Durable Object] message: ${message}, connections: ${this.ctx.getWebSockets().length}`,
-            );
+            client.send(message);
         });
     }
 
-    async webSocketClose(
-        ws: WebSocket,
-        code: number,
-        reason: string,
-        wasClean: boolean,
-    ) {
+    async webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) {
         ws.close(code, "Durable Object is closing WebSocket");
     }
 }

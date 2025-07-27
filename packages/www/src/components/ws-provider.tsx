@@ -1,44 +1,65 @@
 // WebSocketContext.tsx
-import { createContext, useContext, createSignal, onCleanup, type Accessor } from "solid-js";
+import { createContext, useContext, createSignal, onCleanup, type Accessor, type JSXElement } from "solid-js";
 import { useNavigate } from "@tanstack/solid-router";
 
 interface GameMessage {
-    type: "lobby" | "game_start" | "game_state" | "error";
+    type: "lobby" | "game_start" | "game_state" | "error" | "joins";
     data: any;
 }
 
+type Player = {
+    displayName: string;
+    id: string;
+};
+
 const WebSocketContext = createContext({
-    connect: (message: any) => {},
+    connect: (roomId: string, displayName: string) => {},
     send: (message: any) => {},
-    gameState: (() => {}) as Accessor<unknown>,
-    ws: (() => {}) as Accessor<WebSocket | undefined>,
+    gameState: () => {},
+    ws: () => {},
+    players: (() => {}) as Accessor<Player[]>,
 });
 
-export function WebSocketProvider(props: { children: Element }) {
+export function WebSocketProvider(props: { children: JSXElement }) {
     const [ws, setWs] = createSignal<WebSocket>();
-    const [gameState, setGameState] = createSignal();
+    const [gameState, setGameState] = createSignal<GameMessage | undefined>();
+    const [players, setPlayers] = createSignal<Player[]>([]);
     const navigate = useNavigate();
 
-    const connect = (roomId: string) => {
-        const websocket = new WebSocket(`wss://api/game/${roomId}`);
+    const connect = (roomId: string, displayName: string) => {
+        console.log("trying to connect to ws");
+        const websocket = new WebSocket(`/api/game/${roomId}`);
 
-        websocket.onmessage = (event) => {
+        websocket.addEventListener("open", (e) => {
+            websocket.send(JSON.stringify({ type: "joins", data: { displayName } } satisfies GameMessage));
+        });
+
+        websocket.addEventListener("message", (event) => {
             const message: GameMessage = JSON.parse(event.data);
+            console.log("message", event.data, message, message.type);
 
             switch (message.type) {
                 case "lobby":
-                    setGameState(message.data);
+                    setGameState(message);
                     break;
                 case "game_start":
-                    setGameState(message.data);
+                    setGameState(message);
                     // Navigate to game while keeping websocket
                     navigate({ to: "/r/$roomId", params: { roomId: roomId } });
                     break;
                 case "game_state":
-                    setGameState(message.data);
+                    setGameState(message);
+                    break;
+                case "joins":
+                    const newPlayer: Player = {
+                        displayName: message.data.displayName,
+                        id: message.data.displayName,
+                    };
+                    console.log("new player", newPlayer);
+                    setPlayers((prev) => [...prev, newPlayer]);
                     break;
             }
-        };
+        });
 
         setWs(websocket);
     };
@@ -52,7 +73,9 @@ export function WebSocketProvider(props: { children: Element }) {
     });
 
     return (
-        <WebSocketContext.Provider value={{ connect, send, gameState, ws }}>{props.children}</WebSocketContext.Provider>
+        <WebSocketContext.Provider value={{ connect, send, gameState, ws, players }}>
+            {props.children}
+        </WebSocketContext.Provider>
     );
 }
 

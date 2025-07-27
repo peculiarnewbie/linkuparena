@@ -3,7 +3,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "wrangler dev",
+        "dev": "vite dev",
         "start": "vite --port 3000",
         "build": "vite build && tsc",
         "serve": "vite preview",

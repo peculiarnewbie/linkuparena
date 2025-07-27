@@ -9,12 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WhatRouteImport } from './routes/what'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RRoomIdRouteImport } from './routes/r/$roomId'
 import { Route as GameRoomIdRouteImport } from './routes/game/$roomId'
 import { Route as ApiSplatRouteImport } from './routes/api/$'
 import { Route as GameRpsIndexRouteImport } from './routes/game/rps/index'
 
+const WhatRoute = WhatRouteImport.update({
+  id: '/what',
+  path: '/what',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -43,6 +49,7 @@ const GameRpsIndexRoute = GameRpsIndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/what': typeof WhatRoute
   '/api/$': typeof ApiSplatRoute
   '/game/$roomId': typeof GameRoomIdRoute
   '/r/$roomId': typeof RRoomIdRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/what': typeof WhatRoute
   '/api/$': typeof ApiSplatRoute
   '/game/$roomId': typeof GameRoomIdRoute
   '/r/$roomId': typeof RRoomIdRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/what': typeof WhatRoute
   '/api/$': typeof ApiSplatRoute
   '/game/$roomId': typeof GameRoomIdRoute
   '/r/$roomId': typeof RRoomIdRoute
@@ -65,12 +74,19 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/$' | '/game/$roomId' | '/r/$roomId' | '/game/rps'
+  fullPaths:
+    | '/'
+    | '/what'
+    | '/api/$'
+    | '/game/$roomId'
+    | '/r/$roomId'
+    | '/game/rps'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/$' | '/game/$roomId' | '/r/$roomId' | '/game/rps'
+  to: '/' | '/what' | '/api/$' | '/game/$roomId' | '/r/$roomId' | '/game/rps'
   id:
     | '__root__'
     | '/'
+    | '/what'
     | '/api/$'
     | '/game/$roomId'
     | '/r/$roomId'
@@ -79,6 +95,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  WhatRoute: typeof WhatRoute
   ApiSplatRoute: typeof ApiSplatRoute
   GameRoomIdRoute: typeof GameRoomIdRoute
   RRoomIdRoute: typeof RRoomIdRoute
@@ -87,6 +104,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/solid-router' {
   interface FileRoutesByPath {
+    '/what': {
+      id: '/what'
+      path: '/what'
+      fullPath: '/what'
+      preLoaderRoute: typeof WhatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -127,6 +151,7 @@ declare module '@tanstack/solid-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  WhatRoute: WhatRoute,
   ApiSplatRoute: ApiSplatRoute,
   GameRoomIdRoute: GameRoomIdRoute,
   RRoomIdRoute: RRoomIdRoute,

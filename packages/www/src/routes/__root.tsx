@@ -1,3 +1,4 @@
+import { WebSocketProvider } from "@components/ws-provider";
 import { Outlet, createRootRouteWithContext } from "@tanstack/solid-router";
 import { TanStackRouterDevtools } from "@tanstack/solid-router-devtools";
 
@@ -8,7 +9,9 @@ export const Route = createRootRouteWithContext()({
 function RootComponent() {
     return (
         <>
-            <Outlet />
+            <WebSocketProvider>
+                <Outlet />
+            </WebSocketProvider>
             <TanStackRouterDevtools />
         </>
     );

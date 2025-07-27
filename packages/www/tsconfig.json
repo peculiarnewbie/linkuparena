@@ -1,5 +1,6 @@
 {
     "include": ["**/*.ts", "**/*.tsx", ".tokenami/tokenami.env.d.ts"],
+    "exclude": ["src/worker"],
     "compilerOptions": {
         "target": "ES2022",
         "jsx": "preserve",
@@ -21,10 +22,13 @@
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true,
         "noUncheckedSideEffectImports": true,
+        "noImplicitAny": true,
+        "strictFunctionTypes": true,
         "plugins": [{ "name": "tokenami" }],
         "paths": {
             "@components/*": ["./src/components/*"],
-            "@utils/*": ["./src/utils/*"],
-        },
+            "@utils/*": ["./src/utils/*"]
+        }
+    },
     "references": [{ "path": "./tsconfig.worker.json" }]
 }
