@@ -9,14 +9,13 @@
         "bindings": [
             {
                 "name": "LINKUP_ROOM",
-                "class_name": "WebSocketHibernationServer",
+                "class_name": "WebSocketServer",
             },
         ],
     },
     "migrations": [
         {
             "tag": "v1",
-            "new_sqlite_classes": ["WebSocketHibernationServer"],
+            "new_sqlite_classes": ["WebSocketServer"],
         },
-    ],
-}
+    ],}
