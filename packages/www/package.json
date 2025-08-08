@@ -7,7 +7,8 @@
         "start": "vite --port 3000",
         "build": "vite build && tsc",
         "serve": "vite preview",
-        "test": "vitest run"
+        "test": "vitest run",
+        "tokenami": "bunx tokenami --output ./src/styles.css --watch"
     },
     "dependencies": {
         "@cloudflare/vite-plugin": "^1.10.1",

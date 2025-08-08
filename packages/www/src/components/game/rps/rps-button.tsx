@@ -11,11 +11,7 @@ const leave = (element: DOMTarget) => {
     element.style.zIndex = "1";
 };
 
-export const RpsButton = (props: {
-    index: number;
-    selection: string;
-    select: (selection: number) => void;
-}) => {
+export const RpsButton = (props: { index: number; selection: string; select: (selection: number) => void }) => {
     const svgPath = (selection: number) => {
         switch (selection) {
             case 0:
@@ -56,7 +52,6 @@ export const RpsButton = (props: {
                     "--border-radius": "var(--radii_xl)",
                     "--border": "var(--border_rpsButton)",
                     "--box-shadow": "var(--shadow_xl)",
-                    "--font-size": "var(--font-size_huge)",
                     "--padding": 0,
                     "--position": "absolute",
                     "--background-color": "var(--color_pink)",
