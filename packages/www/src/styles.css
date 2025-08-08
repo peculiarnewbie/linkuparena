@@ -44,7 +44,15 @@
   }
 
   * {
+    --block-size: initial;
+    --background: initial;
+    --overflow: initial;
     --display: initial;
+    --flex-direction: initial;
+    --justify-content: initial;
+    --flex-basis: initial;
+    --fluid-text-size-min: initial;
+    --fluid-text-size-max: initial;
     --place-items: initial;
     --grid-column: initial;
     --grid-row: initial;
@@ -59,21 +67,18 @@
     --top: initial;
     --transform: initial;
     --z-index: initial;
-    --justify-content: initial;
     --gap: initial;
-    --flex-basis: initial;
-    --block-size: initial;
-    --background: initial;
-    --overflow: initial;
-    --flex-direction: initial;
-    --fluid-text-size-min: initial;
-    --fluid-text-size-max: initial;
   }
 }
 
 @layer tk1 {
   [style] {
+    background: var(--background, revert-layer);
+    color: var(--color, revert-layer);
+    overflow: var(--overflow, revert-layer);
     display: var(--display, revert-layer);
+    --_fluid-text-size-min: var(--fluid-text-size-min, revert-layer);
+    --_fluid-text-size-max: var(--fluid-text-size-max, revert-layer);
     place-items: var(--place-items, revert-layer);
     grid-column: var(--grid-column, revert-layer);
     grid-row: var(--grid-row, revert-layer);
@@ -91,24 +96,19 @@
     z-index: var(--z-index, revert-layer);
     gap: var(--_tv0n1y, var(--gap, revert-layer));
     --_tv0n1y: var(--gap__calc) calc(var(--gap) * var(--_grid));
-    background: var(--background, revert-layer);
-    color: var(--color, revert-layer);
-    overflow: var(--overflow, revert-layer);
-    --_fluid-text-size-min: var(--fluid-text-size-min, revert-layer);
-    --_fluid-text-size-max: var(--fluid-text-size-max, revert-layer);
   }
 }
 
 @layer tk2 {
   [style] {
-    background-color: var(--background-color, revert-layer);
-    top: var(--_u3oze5, var(--top, revert-layer));
-    --_u3oze5: var(--top__calc) calc(var(--top) * var(--_grid));
+    flex-direction: var(--flex-direction, revert-layer);
     justify-content: var(--justify-content, revert-layer);
     flex-basis: var(--_1cztp9a, var(--flex-basis, revert-layer));
     --_1cztp9a: var(--flex-basis__calc) calc(var(--flex-basis) * var(--_grid));
-    flex-direction: var(--flex-direction, revert-layer);
     font-size: var(--font-size, revert-layer);
+    background-color: var(--background-color, revert-layer);
+    top: var(--_u3oze5, var(--top, revert-layer));
+    --_u3oze5: var(--top__calc) calc(var(--top) * var(--_grid));
   }
 }
 

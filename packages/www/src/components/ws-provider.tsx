@@ -16,9 +16,9 @@ type Player = {
 const WebSocketContext = createContext({
     connect: (roomId: string, displayName?: string) => {},
     send: (message: any) => {},
-    gameState: () => {},
-    ws: () => {},
-    players: (() => {}) as Accessor<Player[]>,
+    gameState: (() => undefined) as Accessor<GameMessage | undefined>,
+    ws: (() => undefined) as Accessor<WebSocket | undefined>,
+    players: (() => []) as Accessor<Player[]>,
     updateName: (displayName: string) => {},
 });
 export function WebSocketProvider(props: { children: JSXElement }) {
@@ -63,7 +63,7 @@ export function WebSocketProvider(props: { children: JSXElement }) {
                     const playerList: Player[] = message.data.map((player: any) => ({
                         displayName: player.displayName,
                         id: player.id,
-                        isAnonymous: !player.displayName || player.displayName === ""
+                        isAnonymous: !player.displayName || player.displayName === "",
                     }));
                     setPlayers(playerList);
                     break;
@@ -72,7 +72,7 @@ export function WebSocketProvider(props: { children: JSXElement }) {
                     const updatedPlayers: Player[] = message.data.map((player: any) => ({
                         displayName: player.displayName,
                         id: player.id,
-                        isAnonymous: !player.displayName || player.displayName === ""
+                        isAnonymous: !player.displayName || player.displayName === "",
                     }));
                     setPlayers(updatedPlayers);
                     break;
@@ -80,6 +80,7 @@ export function WebSocketProvider(props: { children: JSXElement }) {
         });
 
         setWs(websocket);
+        return websocket;
     };
 
     const updateName = (displayName: string) => {
@@ -98,7 +99,8 @@ export function WebSocketProvider(props: { children: JSXElement }) {
         <WebSocketContext.Provider value={{ connect, send, gameState, ws, players, updateName }}>
             {props.children}
         </WebSocketContext.Provider>
-    );}
+    );
+}
 
 export function useWebSocket() {
     const context = useContext(WebSocketContext);
